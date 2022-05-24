@@ -28,21 +28,22 @@ public class Server {
 	public void startReading() {
 		Runnable read=()->{
 			System.out.println("Reader Started.....");
-			while(true) {
-				try {
+			try {
+				while(true) {
+					
 					String msg = reader.readLine();
 					if(msg.equalsIgnoreCase("exit")) {
 						System.out.println("Client Terminated.....");
+						socket.close();
 						break;
 					}
 					
 					System.out.println("Client : "+msg);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+									
 				}
 				
+			}catch(Exception e) {
+				System.out.println("Connection Closed...");
 			}
 		};
 		new Thread(read).start();
@@ -51,17 +52,21 @@ public class Server {
 	public void startWriting() {
 		Runnable write=()->{
 			System.out.println("Writer Started.....");
-			while(true) {
-				try {
+			try {
+				while(true) {
+					
 					BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-					String msg = br.readLine();					
+					String msg = br.readLine();
 					printer.println(msg);
 					printer.flush();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if(msg.equalsIgnoreCase("exit")) {
+						socket.close();
+						break;
+					}
+								
 				}
-				
+			}catch(Exception e) {
+				System.out.println("Connection Closed...");
 			}
 		};
 		new Thread(write).start();
