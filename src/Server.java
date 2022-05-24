@@ -50,7 +50,7 @@ public class Server {
 	
 	public void startWriting() {
 		Runnable write=()->{
-			System.out.println("Writter Started.....");
+			System.out.println("Writer Started.....");
 			while(true) {
 				try {
 					BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
